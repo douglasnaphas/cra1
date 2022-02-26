@@ -1,8 +1,24 @@
-import { render, screen } from '@testing-library/react';
-import App from './App';
+import { render, screen } from "@testing-library/react";
+import App from "./App";
+import userEvent from "@testing-library/user-event";
 
-test('renders learn react link', () => {
+test("change textbox value 1", () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  const input = screen.getByRole("textbox");
+
+  const event = new Event("change");
+  expect(input).toHaveValue("foo");
+  input.value = "bar";
+  input.dispatchEvent(event);
+  expect(input).toHaveValue("bar");
+});
+test("show that users can't actually edit the text", async () => {
+  render(<App />);
+  const user = userEvent.setup();
+  const input = screen.getByRole("textbox");
+
+  await user.tripleClick(input);
+  await user.keyboard("bar");
+
+  expect(input).toHaveValue("bar");
 });

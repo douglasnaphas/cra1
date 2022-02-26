@@ -1,23 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { useState } from "react";
+
+function MyTextField() {
+  const [val, setVal] = useState("foo");
+  return (
+    <div
+      onKeyDown={(e) => {
+        // this is supposed to be doing something else,
+        // but it also does...
+        e.preventDefault();
+      }}
+    >
+      <input
+        value={val}
+        onChange={(e) => {
+          console.log(e);
+          setVal(e.target.value);
+        }}
+      />
+    </div>
+  );
+}
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <MyTextField></MyTextField>
     </div>
   );
 }
