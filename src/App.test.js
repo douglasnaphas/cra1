@@ -11,6 +11,7 @@ test("change textbox value 1", () => {
   input.value = "bar";
   input.dispatchEvent(event);
   expect(input).toHaveValue("bar");
+  screen.getByText("trusted");
 });
 test("show that users can't actually edit the text", async () => {
   render(<App />);
@@ -21,4 +22,5 @@ test("show that users can't actually edit the text", async () => {
   await user.keyboard("bar");
 
   expect(input).toHaveValue("bar");
+  screen.getByText("untrusted"); // events from user-event are untrusted
 });
